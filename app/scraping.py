@@ -12,7 +12,7 @@ import re
 
 class scrapping():
 
-    def __init__(self, total, size_page):
+    def __init__(self, total, size_page= 48):
         self.lowest  = True
         self.total = total
         self.size_page = size_page
