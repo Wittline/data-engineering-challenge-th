@@ -14,22 +14,23 @@ class scrapping():
 
     def __init__(self, total):
         self.total
+        self.min_pages = total//48
+        self.remainder =  total - (48 * self.min_pages)
+        if self.min_pages == 0:
+            self.remainder = 0
 
-    def __get_pages_number(n):
+
+    def __get_df_data(self, **kwargs):
+
+        mc = pd.DataFrame()
+
+        for k, v in kwargs.items():
+            mc[k] = v
+
+        return  mc
         
-        min_pages = n//48
-        remainder =  n - (48 * min_pages)
 
-        if min_pages == 0:
-            remainder = 0
-
-        return min_pages, remainder
-
-
-    def get_df():
-        return pd.DataFrame()
-
-    def __get_data_page(soup):
+    def __get_data_page(self, soup):
         first_pictures = soup.select('img.ui-search-result-image__element')
         fp = [first_pictures[i]['data-src'] for i in range(0, len(first_pictures) - 1)]
         property_names = soup.select('h2.ui-search-item__title')
@@ -51,39 +52,40 @@ class scrapping():
             desc.append(descriptions[0].text)
 
         
-        mc = pd.DataFrame()
-        mc['property_name'] = pn
-        mc['url'] = url
-        mc['price'] = prc
-        mc['adress'] = adr
-
-
+        mc = self.__get_df_data(property_name = pn, url = url, 
+                    price = prc, adress = adr, 
+                    street = adr, number = adr, 
+                    settlement = adr, town = adr, 
+                    state = adr, county = adr, description = desc,
+                    amenities = ame, size = siz, first_picture = fp)
         
-        return fp, pn, url, prc, adr, siz, ame, desc
+        return mc
 
 
 
+    def get_data(self, total):
 
-    def get_data(total):
+        mc = self.__get_df_data(property_name = None, url = None, 
+            price = None, adress = None, 
+            street = None, number = None, 
+            settlement = None, town = None, 
+            state = None, county = None, description = None,
+            amenities = None, size = None, first_picture = None)
 
-        pages, remainder = get_pages_number(total)
-        print(pages, remainder)
         c = 0
-        for p in range(0, pages, 1):
+        for p in range(0, self.min_pages, 1):
             if p > 0:
                 c = (p * 48) + 1
             URL = 'https://inmuebles.metroscubicos.com/casas/venta/quintana-roo/_Desde_{number}_NoIndex_True'.format(number=c)
-            print(URL)
             response = requests.get(URL)
             soup = BeautifulSoup(response.content, 'lxml')
-            data = get_data_page(soup)
+            mc.append(self.__get_data_page(soup, self, total, 0))
 
 
-        # if remainder > 0:
-        #     c += 48
-        #     URL = 'https://inmuebles.metroscubicos.com/casas/venta/quintana-roo/_Desde_{number}_NoIndex_True'.format(number=c + 1)
-        #     print(URL)
-        #     response = requests.get(URL)
-        #     soup = BeautifulSoup(response.content, 'lxml')
-        #     li_elements = soup.select('li.ui-search-layout__item')
-        #     for li in range(0, remainder, 1):
+        if self.remainder > 0:
+            c += 48
+            URL = 'https://inmuebles.metroscubicos.com/casas/venta/quintana-roo/_Desde_{number}_NoIndex_True'.format(number=c + 1)            
+            response = requests.get(URL)
+            soup = BeautifulSoup(response.content, 'lxml')
+            li_elements = soup.select('li.ui-search-layout__item')
+            for li in range(0, remainder, total,1):
