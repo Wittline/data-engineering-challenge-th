@@ -25,26 +25,43 @@ class scrapping():
 
         return min_pages, remainder
 
-    def __get_data_page(soup):
-        #first_pictures = soup.select('img.ui-search-result-image__element')
-        #print(li_elements[0]['data-src'])
-        #property_names = soup.select('h2.ui-search-item__title')
-        #print(property_names[0].text)
-        #urls = soup.select('a.ui-search-result__content')
-        #print(urls[0]['href'])
-        #prices = soup.select('span.price-tag-text-sr-only')
-        #print(prices[0].text)
-        # addresses = soup.select('span.ui-search-item__location')
-        # print(addresses[0].text)
-        # sizes = soup.select('li.ui-search-card-attributes__attribute')
-        # print(re.findall("\d+", sizes[0].text)[0])
-        amenities = soup.select("li.ui-search-card-attributes__attribute")
-        print(amenities[4].text)
 
-        # descriptions_response  = requests.get(urls[0]['href'])
-        # descriptions_soup  = BeautifulSoup(descriptions_response.content, 'lxml')
-        # descriptions = descriptions_soup.select('p.ui-pdp-description__content')
-        # print(descriptions[0].text)    
+    def get_df():
+        return pd.DataFrame()
+
+    def __get_data_page(soup):
+        first_pictures = soup.select('img.ui-search-result-image__element')
+        fp = [first_pictures[i]['data-src'] for i in range(0, len(first_pictures) - 1)]
+        property_names = soup.select('h2.ui-search-item__title')
+        pn = [property_names[i].text for i in range(0, len(property_names) - 1)]
+        urls = soup.select('a.ui-search-result__content')
+        url = [urls[i]['href'] for i in range(0, len(urls) - 1)]
+        prices = soup.select('span.price-tag-text-sr-only')
+        prc = [prices[i].text for i in range(0, len(prices) - 1)]
+        addresses = soup.select('span.ui-search-item__location')
+        adr = [addresses[i].text for i in range(0, len(addresses) - 1)]
+        sizes = soup.select('li.ui-search-card-attributes__attribute')
+        siz = [re.findall("\d+", sizes[i].text)[0] for i in range(0, len(sizes) - 1) if i % 2 == 0]
+        ame = [sizes[i].text for i in range(0, len(sizes) - 1) if i % 2 != 0]
+        desc = []
+        for ur in url:
+            descriptions_response  = requests.get(ur)
+            descriptions_soup  = BeautifulSoup(descriptions_response.content, 'lxml')
+            descriptions = descriptions_soup.select('p.ui-pdp-description__content')
+            desc.append(descriptions[0].text)
+
+        
+        mc = pd.DataFrame()
+        mc['property_name'] = pn
+        mc['url'] = url
+        mc['price'] = prc
+        mc['adress'] = adr
+
+
+        
+        return fp, pn, url, prc, adr, siz, ame, desc
+
+
 
 
     def get_data(total):
