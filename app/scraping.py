@@ -85,7 +85,7 @@ class scraping():
             self.__set_data_page(soup, self.remainder)
         else:
             for p in range(0, self.min_pages, 1):
-                print("Scraping data from page:", p)
+                print("Scraping data from page:", p + 1)
                 if p > 0:
                     c = (p * self.size_page) + 1
                 soup = self.__get_soup(c)
@@ -96,6 +96,6 @@ class scraping():
                 c += self.size_page
                 soup = self.__get_soup(c + 1)                
                 self.__set_data_page(soup, self.remainder)
- 
-        print("Joining scraped pages...")      
+
+        print("Joining all the scraped pages and remainders...")
         return pd.concat([pd.DataFrame(self.mc[i], columns=self.mc[i].keys()) for i in range(0, len(self.mc))], axis =0).reset_index()
