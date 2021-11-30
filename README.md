@@ -5,6 +5,12 @@ This repository aims to show you how to dockerize a Python script for web scrapi
 ## Docker environment
 ![image](https://user-images.githubusercontent.com/8701464/144087110-fc3589bd-f4f2-461d-9e7a-90f6ad9d3a23.png)
 
+
+## Dockerfile
+
+![carbon (27)](https://user-images.githubusercontent.com/8701464/144100115-e3e89bb2-a7e8-47a7-a2d3-d53acc17b796.png)
+
+
 ## Details
 The project consists of two processes:
 
