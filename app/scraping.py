@@ -10,7 +10,7 @@ import lxml
 import re
 
 
-class scrapping():
+class scraping():
 
     def __init__(self, total, size_page= 48):
         self.lowest  = True

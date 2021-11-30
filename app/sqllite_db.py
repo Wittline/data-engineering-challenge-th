@@ -2,11 +2,19 @@ import sqlite3
 
 class sqllite_db(object):
 
-        conn = sqlite.connect('metroscubicos.db')
+        def __init__(self, table):
+                self.table = table
+                self.__init_table()
 
-        c = conn.cursor()
 
-        c.execute(""" CREATE TABLE IF NOT EXISTS ESTATE (
+
+        def __get_connection(self):
+                return sqlite3.connect('metroscubicos.db')
+
+        def __init_table(self, con):
+                con = self.__get_connection()
+                c = con.cursor()
+                c.execute(""" CREATE TABLE IF NOT EXISTS {t} (
                         Property_name text, 
                         Url text
                         Price real
@@ -20,8 +28,23 @@ class sqllite_db(object):
                         Description text,
                         Amenities text,
                         Size integer,
-                First picture text )""")
+                First picture text )""".format(t= self.table))
+                con.commit()
+                con.close()
 
-        conn.commit()
-        conn.close()
+        def bulk_data(self, data):
+                data.to_sql(self.table, con=self.__get_connection(), if_exists = "replace")
+        
+        def validate(self):
+                con = self.__get_connection()
+                c = con.cursor()
+                c.execute(""" SELECT count(*) from {t} """.format(t = self.table))
+                count = c.fetchone()[0]
+                con.commit()
+                con.close()
+                return count
+
+
+        
+
 
