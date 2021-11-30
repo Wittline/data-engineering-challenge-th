@@ -55,3 +55,22 @@ docker run -p 8000:8000 python-th
 
 - Ready!. Web scraping process was executed and the fastApi App exposed, lets try looking into this url:: **http://127.0.0.1:8000/items/2**
 
+- If you want stop everything, go and opne another gitbash windows, use the below command:
+
+``` 
+ramse@DESKTOP-K6K6E5A MINGW64 ~/documents/github/data-engineering-challenge-th
+docker container ls 
+```
+- Now use the below command using the **CONTAINER ID** shown in the last step, this will stop everything:
+``` 
+ramse@DESKTOP-K6K6E5A MINGW64 ~/documents/github/data-engineering-challenge-th
+docker stop 7f2181fe515d
+```
+- If you want to release your resources, then you can use the below command, this will delete everything:
+
+``` 
+ramse@DESKTOP-K6K6E5A MINGW64 ~/documents/github/data-engineering-challenge-th
+docker system prune -a
+```
+
+
