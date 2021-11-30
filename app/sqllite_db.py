@@ -21,7 +21,7 @@ class sqllite_db(object):
                 c.execute(""" CREATE TABLE IF NOT EXISTS {t} (
                         Property_name text, 
                         Url text
-                        Price real
+                        Price text
                         Adress text,
                         Street text,
                         Number text,
@@ -31,7 +31,7 @@ class sqllite_db(object):
                         County text,
                         Description text,
                         Amenities text,
-                        Size integer,
+                        Size text,
                 First picture text )""".format(t= self.table))
                 con.commit()
                 con.close()

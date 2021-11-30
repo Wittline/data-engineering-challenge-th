@@ -3,6 +3,7 @@ from sqllite_db import sqllite_db
 from databases import Database
 from fastapi import FastAPI
 import uvicorn
+import json
 
 database = Database("sqlite:///metroscubicos.sqlite")
 
