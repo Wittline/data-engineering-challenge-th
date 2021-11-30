@@ -2,12 +2,11 @@ import sqlite3
 
 class sqllite_db(object):
 
-        def __init__(self, table):
-                self.table = table
-                self.__init_table()
+        def __init__(self, table= 'ESTATE'):
+                self.table = table                
 
 
-        def __get_connection(self):
+        def  get_connection(self):
                 conn = None
                 try:
                         conn = sqlite3.connect('metroscubicos.sqlite')
@@ -16,8 +15,8 @@ class sqllite_db(object):
                 return conn
                 
 
-        def __init_table(self):
-                con = self.__get_connection()
+        def init_table(self):
+                con = self.get_connection()
                 c = con.cursor()
                 c.execute(""" CREATE TABLE IF NOT EXISTS {t} (
                         Property_name text, 
@@ -38,10 +37,10 @@ class sqllite_db(object):
                 con.close()
 
         def bulk_data(self, data):
-                data.to_sql(self.table, con=self.__get_connection(), if_exists = "replace")
+                data.to_sql(self.table, con=self.get_connection(), if_exists = "replace")
         
         def validate(self):
-                con = self.__get_connection()
+                con = self.get_connection()
                 c = con.cursor()
                 c.execute(""" SELECT count(*) from {t} """.format(t = self.table))
                 count = c.fetchone()[0]

@@ -10,6 +10,7 @@ class publicaciones(object):
 
     def __load_data(self, data):
         db = sqllite_db('ESTATE')
+        db.init_table()
         db.bulk_data(data)
         print("{c} records were scraped from metroscubicos.com and loaded to the database {d}".format(c= db.validate(), d = 'metroscubicos.db'))
 
