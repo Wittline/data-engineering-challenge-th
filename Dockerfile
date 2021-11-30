@@ -1,6 +1,6 @@
-FROM python:3.8
+FROM python:3.7.9
 
-WORKDIR /fastapiapp
+WORKDIR /TH-app
 
 COPY requirements.txt .
 
@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY ./app ./app
 
-CMD ["python", "./app/main.py"]
+CMD python publicaciones.py -t 50 -s 48 ; python main.py

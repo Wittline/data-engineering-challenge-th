@@ -1,11 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-import numpy as np
 from datetime import date, datetime
-import csv
-import time
-import metroscubicos as mc
 import lxml
 import re
 

@@ -7,11 +7,10 @@ class sqllite_db(object):
                 self.__init_table()
 
 
-
         def __get_connection(self):
                 return sqlite3.connect('metroscubicos.db')
 
-        def __init_table(self, con):
+        def __init_table(self):
                 con = self.__get_connection()
                 c = con.cursor()
                 c.execute(""" CREATE TABLE IF NOT EXISTS {t} (
