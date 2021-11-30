@@ -8,11 +8,7 @@ This repository aims to show you how to dockerize a Python script for web scrapi
 ## Details
 The project consists of two processes:
 
-1. A Python script that is executed when the docker image is created, this script will be responsible for scraped the data from the website: www.metrocubicos.com and will store the data in a sqlite database, the script is in the file **publications.py** and receives the following arguments as parameters:
-
-**python publicaciones.py -t 50  -s 48**, **-t** indicates the number of total elements to be scraped from the web site, and the parameter **-s** indicates the number of elements per page that the web site contains, this last parameter is not needed, by default it is using the number 48, if site´s structure changes in the future so this parameter can be changed at your convenience.
-
-the dockerfile file will be in charge of running the command: **RUN python -u ./app/publicaciones.py -t 50 -s 48** when Docker Image is built.
+1. A Python script that is executed when the docker image is created, this script will be responsible for scraped the data from the website: www.metrocubicos.com and will store the data in a sqlite database, the script is in the file **publications.py** and receives the following arguments as parameters: **python publicaciones.py -t 50  -s 48**, **-t** indicates the number of total elements to be scraped from the web site, and the parameter **-s** indicates the number of elements per page that the web site contains, this last parameter is not needed, by default it is using the number 48, if site´s structure changes in the future so this parameter can be changed at your convenience. the dockerfile file will be in charge of running the command: **RUN python -u ./app/publicaciones.py -t 50 -s 48** when Docker Image is built.
 
 ![image](https://user-images.githubusercontent.com/8701464/144090544-768621be-5b97-4e5f-970a-acd7b0d9dcff.png)
 
