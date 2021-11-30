@@ -6,24 +6,24 @@ This repository aims to show you how to dockerize a Python script for web scrapi
 ![image](https://user-images.githubusercontent.com/8701464/144087110-fc3589bd-f4f2-461d-9e7a-90f6ad9d3a23.png)
 
 ## Details
-El proyecto consta de dos procesos:
+The project consists of two processes:
 
-1. Un script de Python que se executa cuando se crea la imagen de docker, este script sera responsable de extraer la informacion del sitio web: www.metroscubicos.com y almacenar los datos extraidos en una base de datos sqlite, el script esta en el archivo **publicaciones.py** y recibe como parametros los siguientes argumentos:
+1. A Python script that is executed when the docker image is created, this script will be responsible for scraped the data from the website: www.metrocubicos.com and will store the data in a sqlite database, the script is in the file **publications.py** and receives the following arguments as parameters:
 
-**python publicaciones.py -t 50  -s 48**, **-t** indica la cantidad elementos totales que se quieren extraer del sitio, y el parametro *-s* indiga la cantidad de elementos por pagina que contiene el sitio, este ultimo parametrp no es necesario usarlo, por defecto esta usando el numero 48, si la estructura del sitio cambia se puede cambiar a conveniencia.
+**python publicaciones.py -t 50  -s 48**, **-t** indicates the number of total elements to be scraped from the web site, and the parameter **-s** indicates the number of elements per page that the web site contains, this last parameter is not needed, by default it is using the number 48, if site´s structure changes in the future so this parameter can be changed at your convenience.
 
-el archivo docker file se encarga de corer el comando **RUN python -u ./app/publicaciones.py -t 50 -s 48** cuando se construye la imagen de docker.
+the dockerfile file will be in charge of running the command: **RUN python -u ./app/publicaciones.py -t 50 -s 48** when Docker Image is built.
 
 ![image](https://user-images.githubusercontent.com/8701464/144090544-768621be-5b97-4e5f-970a-acd7b0d9dcff.png)
 
 
-2. Una vez que la imagen docker se construyó o el proceso build terminó, se inicializará la app de FastApi, el archivo dockerfile se encarga de correr el comando: **CMD ["python", "./app/main.py"]**,esto expone un servicio, puedes intentar llamarlo por localhost de la siguiente manera:  **http://127.0.0.1:8000/items/2**, este ejemplo retorna dos registros almacenados en la base de datos **metroscubicos.sqlite** en la tabla **ESTATE**.
+2. Once the Docker image was built, the FastApi app will be initialized, the dockerfile file is in charge of running the command: **CMD ["python", "./app/main.py"]**, this exposes a service, you can try to call it by localhost as follows:  **http://127.0.0.1:8000/items/2**, this example returns two records stored in the database **metroscubicos.sqlite** in the **ESTATE** table.
 
 ![image](https://user-images.githubusercontent.com/8701464/144091524-98a49806-c35a-4bfb-b1c5-4546ba555de5.png)
 
 ## How to run
 
-Para hacer funcionar el ejemplo sigue los siguientes pasos:
+In order to make this example work correctly please follow the next steps:
 
 - Install <a href="https://www.stanleyulili.com/git/how-to-install-git-bash-on-windows/">git-bash for windows</a>, once installed , open **git bash** and download this repository, this will download the **app** folder and the **Dockerfile** file, and other files needed.
 
@@ -51,5 +51,5 @@ docker run -p 8000:8000 python-th
 
 ![image](https://user-images.githubusercontent.com/8701464/144096285-a0eda402-8a63-4483-a9c7-7f2e7b47dffe.png)
 
-- READY, the web scrapping process ws executed and the api exposed, lets try looking into this url: **http://127.0.0.1:8000/items/2**
+- Ready!. Web scraping process was executed and the fastApi App exposed, lets try looking into this url:: **http://127.0.0.1:8000/items/2**
 
