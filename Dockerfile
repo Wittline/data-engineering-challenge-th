@@ -8,4 +8,10 @@ RUN pip install -r requirements.txt
 
 COPY ./app ./app
 
-CMD python publicaciones.py -t 50 -s 48 ; python main.py
+RUN python -u ./app/publicaciones.py -t 50 -s 48
+
+CMD ["python", "./app/main.py"]
+
+#docker build -t python-th . --progress=plain
+
+#docker run -p 8000:8000 python-th
