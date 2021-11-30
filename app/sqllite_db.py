@@ -8,7 +8,13 @@ class sqllite_db(object):
 
 
         def __get_connection(self):
-                return sqlite3.connect('metroscubicos.db')
+                conn = None
+                try:
+                        conn = sqlite3.connect('metroscubicos.sqlite')
+                except sqlite3.error as e:
+                        print(e)      
+                return conn
+                
 
         def __init_table(self):
                 con = self.__get_connection()
@@ -42,6 +48,9 @@ class sqllite_db(object):
                 con.commit()
                 con.close()
                 return count
+
+        
+
 
 
         
