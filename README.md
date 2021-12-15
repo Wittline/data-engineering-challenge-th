@@ -53,7 +53,6 @@ docker run -p 8000:8000 python-th
 - Ready!. Web scraping process was executed and the fastApi App exposed, lets try looking into this url:: **http://127.0.0.1:8000/items/2**
 
 - If you want stop everything, go and open another gitbash windows and use the below command:
-
 ``` 
 ramse@DESKTOP-K6K6E5A MINGW64 ~/documents/github/data-engineering-challenge-th
 docker container ls 
